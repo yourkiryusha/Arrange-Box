@@ -1,0 +1,176 @@
+body{
+  @include flex-column;
+}
+
+img{
+  width: 15px;
+  height: 15px;
+  margin: var(--margin);
+}
+
+button{
+  width: 50px;
+  height: 50px;
+  border: var(--border-button);
+  border-radius: var(--border-radius);
+  background-color: var(--color-lightseagreen);
+
+  &:hover{
+    background-color: var(--color-aqua);
+  }
+}
+
+.arrange-boxes{
+  @include flex-column;
+  row-gap: 15px;
+}
+
+.arrange-box{
+  display: flex;
+  width: 1000px;
+  height: 500px;
+  margin: var(--margin);
+  border: var(--border);
+  border-radius: var(--border-radius);
+}
+
+.arrange-box{
+  >div{
+    &:nth-child(even){
+      flex: 5;
+    }
+    flex: 1;
+  }
+}
+
+.available-buttons,
+.transfer-buttons,
+.selected-buttons{
+  @include flex-center-column;
+  row-gap: 15px;
+  padding: 15px;
+}
+
+.available-wrapper,
+.selected-wrapper{
+  @include flex-column;
+  row-gap: 15px;
+  padding: 10px;
+  margin: 25px 0;
+  border: var(--border);
+  border-radius: var(--border-radius-middle);
+}
+
+.body-item{
+  @include flex-center;
+  height: 50px;
+  border: var(--border);
+  border-radius: var(--border-radius-small);
+}
+
+.available-body,
+.selected-body{
+  height: 100%;
+  overflow-y: auto;
+}
+
+.active{
+  background-color: var(--color-lightgray);
+}
+
+.available-input,
+.selected-input{
+  height: 35px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  border: var(--border);
+  border-radius: var(--border-radius-small);
+
+  &:focus{
+    outline: none;
+    border: none;
+    box-shadow: 0 0 10px var(--color-lightseagreen);
+  }
+}
+
+.button-add-new-arrange-box{
+  margin: 15px auto 0;
+}
+
+.available-body,
+.selected-body{
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--color-lightgray);
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-lightseagreen);
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--color-aqua);
+  }
+}
+
+.button-available-move-up,
+.button-selected-move-up{
+  @include button-icon('move-up');
+}
+
+.button-available-move-top,
+.button-selected-move-top{
+  @include button-icon('move-top');
+}
+
+.button-available-move-down,
+.button-selected-move-down{
+  @include button-icon('move-down');
+}
+
+.button-available-move-bottom,
+.button-selected-move-bottom{
+  @include button-icon('move-bottom');
+}
+
+.button-available-add-item,
+.button-add-new-arrange-box{
+  @include button-icon('add-item');
+}
+
+.button-available-sorting-ascending{
+  @include button-sorting-icon('sorting-ascending');
+}
+
+.button-available-sorting-descending{
+  @include button-sorting-icon('sorting-descending');
+}
+
+.button-move-to-selected{
+  @include button-icon('move-right');
+}
+
+.button-move-to-selected-all{
+  @include button-icon('move-all-right');
+}
+
+.button-move-to-available{
+  @include button-icon('move-left');
+}
+
+.button-move-to-available-all{
+  @include button-icon('move-all-left');
+}
+
+.button-reset-arrange-box{
+  @include button-icon('reset-arrange-box');
+}
+
+.button-current-state-arrange-box{
+  @include button-icon('current-state');
+}

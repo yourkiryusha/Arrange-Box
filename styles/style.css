@@ -1,0 +1,396 @@
+@charset "UTF-8";
+/**
+  Нормализация блочной модели
+ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/**
+  Убираем внутренние отступы слева тегам списков,
+  у которых есть атрибут class
+ */
+:where(ul, ol):where([class]) {
+  padding-left: 0;
+}
+
+/**
+  Убираем внешние отступы body и двум другим тегам,
+  у которых есть атрибут class
+ */
+body,
+:where(blockquote, figure):where([class]) {
+  margin: 0;
+}
+
+/**
+  Убираем внешние отступы вертикали нужным тегам,
+  у которых есть атрибут class
+ */
+:where(h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+dl):where([class]) {
+  margin-block: 0;
+}
+
+:where(dd[class]) {
+  margin-left: 0;
+}
+
+:where(fieldset[class]) {
+  margin-left: 0;
+  padding: 0;
+  border: none;
+}
+
+/**
+  Убираем стандартный маркер маркированному списку,
+  у которого есть атрибут class
+ */
+:where(ul[class]) {
+  list-style: none;
+}
+
+/**
+  Обнуляем вертикальные внешние отступы параграфа,
+  объявляем локальную переменную для внешнего отступа вниз,
+  чтобы избежать взаимодействие с более сложным селектором
+ */
+p {
+  --paragraphMarginBottom: 24px;
+  margin-block: 0;
+}
+
+/**
+  Внешний отступ вниз для параграфа без атрибута class,
+  который расположен не последним среди своих соседних элементов
+ */
+p:where(:not([class]):not(:last-child)) {
+  margin-bottom: var(--paragraphMarginBottom);
+}
+
+/**
+  Упрощаем работу с изображениями
+ */
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/**
+  Наследуем свойства шрифт для полей ввода
+ */
+input,
+textarea,
+select,
+button {
+  font: inherit;
+}
+
+html {
+  /**
+    Пригодится в большинстве ситуаций
+    (когда, например, нужно будет "прижать" футер к низу сайта)
+   */
+  height: 100%;
+  /**
+    Плавный скролл
+   */
+  scroll-behavior: smooth;
+}
+
+body {
+  /**
+    Пригодится в большинстве ситуаций
+    (когда, например, нужно будет "прижать" футер к низу сайта)
+   */
+  min-height: 100%;
+  /**
+    Унифицированный интерлиньяж
+   */
+  line-height: 1.5;
+}
+
+/**
+  Приводим к единому цвету svg-элементы
+ */
+svg *[fill] {
+  fill: currentColor;
+}
+
+svg *[stroke] {
+  stroke: currentColor;
+}
+
+/**
+  Чиним баг задержки смены цвета при взаимодействии с svg-элементами
+ */
+svg * {
+  transition-property: fill, stroke;
+}
+
+/**
+  Удаляем все анимации и переходы для людей,
+  которые предпочитают их не использовать
+ */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+:root {
+  --color-lightseagreen: lightseagreen;
+  --color-aqua: aqua;
+  --color-lightgray: lightgray;
+  --color-white: #FFF;
+  --border: 1px solid var(--color-lightseagreen);
+  --border-button: 1px solid var(--color-white);
+  --border-radius: 15px;
+  --border-radius-middle: 10px;
+  --border-radius-small: 5px;
+  --margin: auto;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+img {
+  width: 15px;
+  height: 15px;
+  margin: var(--margin);
+}
+
+button {
+  width: 50px;
+  height: 50px;
+  border: var(--border-button);
+  border-radius: var(--border-radius);
+  background-color: var(--color-lightseagreen);
+}
+button:hover {
+  background-color: var(--color-aqua);
+}
+
+.arrange-boxes {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+}
+
+.arrange-box {
+  display: flex;
+  width: 1000px;
+  height: 500px;
+  margin: var(--margin);
+  border: var(--border);
+  border-radius: var(--border-radius);
+}
+
+.arrange-box > div {
+  flex: 1;
+}
+.arrange-box > div:nth-child(even) {
+  flex: 5;
+}
+
+.available-buttons,
+.transfer-buttons,
+.selected-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 15px;
+  padding: 15px;
+}
+
+.available-wrapper,
+.selected-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  padding: 10px;
+  margin: 25px 0;
+  border: var(--border);
+  border-radius: var(--border-radius-middle);
+}
+
+.body-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  border: var(--border);
+  border-radius: var(--border-radius-small);
+}
+
+.available-body,
+.selected-body {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.active {
+  background-color: var(--color-lightgray);
+}
+
+.available-input,
+.selected-input {
+  height: 35px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  border: var(--border);
+  border-radius: var(--border-radius-small);
+}
+.available-input:focus,
+.selected-input:focus {
+  outline: none;
+  border: none;
+  box-shadow: 0 0 10px var(--color-lightseagreen);
+}
+
+.button-add-new-arrange-box {
+  margin: 15px auto 0;
+}
+
+.available-body::-webkit-scrollbar,
+.selected-body::-webkit-scrollbar {
+  width: 10px;
+}
+.available-body::-webkit-scrollbar-track,
+.selected-body::-webkit-scrollbar-track {
+  background: var(--color-lightgray);
+  border-radius: 5px;
+}
+.available-body::-webkit-scrollbar-thumb,
+.selected-body::-webkit-scrollbar-thumb {
+  background: var(--color-lightseagreen);
+  border-radius: 5px;
+}
+.available-body::-webkit-scrollbar-thumb:hover,
+.selected-body::-webkit-scrollbar-thumb:hover {
+  background: var(--color-aqua);
+}
+
+.button-available-move-up::before,
+.button-selected-move-up::before {
+  content: "";
+  display: inline-block;
+  background: url("../icons/move-up.svg") center/contain no-repeat;
+  width: 15px;
+  height: 15px;
+}
+
+.button-available-move-top::before,
+.button-selected-move-top::before {
+  content: "";
+  display: inline-block;
+  background: url("../icons/move-top.svg") center/contain no-repeat;
+  width: 15px;
+  height: 15px;
+}
+
+.button-available-move-down::before,
+.button-selected-move-down::before {
+  content: "";
+  display: inline-block;
+  background: url("../icons/move-down.svg") center/contain no-repeat;
+  width: 15px;
+  height: 15px;
+}
+
+.button-available-move-bottom::before,
+.button-selected-move-bottom::before {
+  content: "";
+  display: inline-block;
+  background: url("../icons/move-bottom.svg") center/contain no-repeat;
+  width: 15px;
+  height: 15px;
+}
+
+.button-available-add-item::before,
+.button-add-new-arrange-box::before {
+  content: "";
+  display: inline-block;
+  background: url("../icons/add-item.svg") center/contain no-repeat;
+  width: 15px;
+  height: 15px;
+}
+
+.button-available-sorting-ascending::before {
+  content: "";
+  display: inline-block;
+  background: url("../icons/sorting-ascending.svg") center/contain no-repeat;
+  width: 20px;
+  height: 20px;
+}
+
+.button-available-sorting-descending::before {
+  content: "";
+  display: inline-block;
+  background: url("../icons/sorting-descending.svg") center/contain no-repeat;
+  width: 20px;
+  height: 20px;
+}
+
+.button-move-to-selected::before {
+  content: "";
+  display: inline-block;
+  background: url("../icons/move-right.svg") center/contain no-repeat;
+  width: 15px;
+  height: 15px;
+}
+
+.button-move-to-selected-all::before {
+  content: "";
+  display: inline-block;
+  background: url("../icons/move-all-right.svg") center/contain no-repeat;
+  width: 15px;
+  height: 15px;
+}
+
+.button-move-to-available::before {
+  content: "";
+  display: inline-block;
+  background: url("../icons/move-left.svg") center/contain no-repeat;
+  width: 15px;
+  height: 15px;
+}
+
+.button-move-to-available-all::before {
+  content: "";
+  display: inline-block;
+  background: url("../icons/move-all-left.svg") center/contain no-repeat;
+  width: 15px;
+  height: 15px;
+}
+
+.button-reset-arrange-box::before {
+  content: "";
+  display: inline-block;
+  background: url("../icons/reset-arrange-box.svg") center/contain no-repeat;
+  width: 15px;
+  height: 15px;
+}
+
+.button-current-state-arrange-box::before {
+  content: "";
+  display: inline-block;
+  background: url("../icons/current-state.svg") center/contain no-repeat;
+  width: 15px;
+  height: 15px;
+}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,47 @@
+@mixin flex-column{
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-center-column{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+$icons-path: "../icons/";
+
+@mixin button-icon($icon-name) {
+  &::before {
+    content: '';
+    display: inline-block;
+    background: url('#{$icons-path}#{$icon-name}.svg') center/contain no-repeat;
+    @include icon-size;
+  }
+}
+
+@mixin button-sorting-icon($icon-name) {
+  &::before {
+    content: '';
+    display: inline-block;
+    background: url('#{$icons-path}#{$icon-name}.svg') center/contain no-repeat;
+    @include icon-sorting-size;
+  }
+}
+
+@mixin icon-size{
+  width: 15px;
+  height: 15px;
+}
+
+@mixin icon-sorting-size{
+  width: 20px;
+  height: 20px;
+}
